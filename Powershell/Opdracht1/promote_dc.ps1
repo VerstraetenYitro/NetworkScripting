@@ -1,27 +1,35 @@
 ﻿$computerName = "win11-DC1"
 $installingRolesNames = "AD-Domain-Services","DHCP","DNS" #to get list of all roles run "Get-WindowsFeature"
 $credential="administrator"
-$domainCredential="$env:USERDOMAIN\$credential"
+$domainCredential="$env:INTRANET\$credential"
+$domainname = “intranet.mijnschool.be”
+$netbiosName = “mijnschool”
 
 
 
 #control if roles are already installed, if not install the role.
 
 
-$alreadyInstalled = Get-WindowsFeature -Name $installingRolesNames[$i - 1] | % Installed
+$alreadyInstalled = Get-WindowsFeature -Name "AD-Domain-Services" | % Installed
 if(-not $alreadyInstalled)
 {
-    Install-WindowsFeature -Name $installingRolesNames[$i - 1] -computerName $computerName -IncludeManagementTools -Restart
+    Install-WindowsFeature -Name "AD-Domain-Services" -computerName $computerName -IncludeManagementTools -Restart
 } 
 
 
 
 
 # Create New Forest, add Domain Controller
-$domainname = “intranet.mijnschool.be”
-$netbiosName = “mijnschool”
-Install-ADDSForest -DomainName "$domainname" -InstallDNS
-
+if(Get-ADForest)
+{
+    Write-Host "forest already made"
+}
+else
+{
+    Install-ADDSForest -DomainName "$domainname" -DomainNetbiosName $netbiosName -InstallDNS
+}
 
 #add DC
-Install-ADDSDomainController -InstallDns -Credential $credential -DomainName $domainname
+#Install-ADDSDomainController -InstallDns -Credential (Get-Credential -Credential $credential) -DomainName $domainname
+
+Install-ADDSDomainController -InstallDns -DomainName $domainname
