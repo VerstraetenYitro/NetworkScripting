@@ -30,6 +30,6 @@ else
 }
 
 #add DC
-#Install-ADDSDomainController -InstallDns -Credential (Get-Credential -Credential $credential) -DomainName $domainname
+Install-ADDSDomainController -InstallDns -Credential (Get-Credential -Credential $credential) -DomainName $domainname -Confirm
 
-Install-ADDSDomainController -InstallDns -DomainName $domainname
+#Install-ADDSDomainController -InstallDns -DomainName $domainname 
