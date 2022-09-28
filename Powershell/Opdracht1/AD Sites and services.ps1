@@ -15,3 +15,6 @@ if(-not $alreadyInstalled)
 
 #add subnet to site
 New-ADReplicationSubnet -Name "192.168.1.0/24" -Site $newSiteName -Location "Kortrijk,Belgium"
+
+#create UPN suffix
+Get–ADForest | Set–ADForest –UPNSuffixes @{add=“mijnschool.be”}
