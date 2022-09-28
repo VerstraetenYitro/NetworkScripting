@@ -37,3 +37,4 @@ $netadapter | Set-DNSClientServerAddress -ServerAddress ("192.168.1.2","192.168.
 #Install-ADDSDomainController -InstallDns -Credential (Get-Credential -Credential $credential) -DomainName $domainname -Confirm
 
 #Install-ADDSDomainController -InstallDns -DomainName $domainname 
+
