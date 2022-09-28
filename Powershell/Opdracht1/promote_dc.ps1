@@ -4,6 +4,7 @@ $credential="administrator"
 $domainCredential="$env:INTRANET\$credential"
 $domainname = “intranet.mijnschool.be”
 $netbiosName = “mijnschool”
+$netadapter = Get-NetAdapter -Name "Ethernet0"
 
 
 
@@ -29,7 +30,10 @@ else
     Install-ADDSForest -DomainName "$domainname" -DomainNetbiosName $netbiosName -InstallDNS
 }
 
-#add DC
-Install-ADDSDomainController -InstallDns -Credential (Get-Credential -Credential $credential) -DomainName $domainname -Confirm
+#set DNS correct
+$netadapter | Set-DNSClientServerAddress -ServerAddress ("192.168.1.2","192.168.1.3")
+
+
+#Install-ADDSDomainController -InstallDns -Credential (Get-Credential -Credential $credential) -DomainName $domainname -Confirm
 
 #Install-ADDSDomainController -InstallDns -DomainName $domainname 
