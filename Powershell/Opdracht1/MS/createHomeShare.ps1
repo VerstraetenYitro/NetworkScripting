@@ -1,3 +1,22 @@
-﻿New-Item "C:\SharedFolder" -Type Directory
+﻿#
+# Creating a home share
+#
+$credential="administrator"
+$domainCredential="$env:USERDOMAIN\$credential"
+$computername="win11-MS"
+$dnsdomain=$env:USERDNSDOMAIN.tolower()
 
-New-SmbShare -Name "FolderShare" -Path "C:\SharedFolder" -FullAccess "MSNOOB\Administrators", "MSNOOB\MS-RDS1$"
+
+
+$remoteSession=New-PSSession -ComputerName $computername -Credential $domainCredential
+
+
+
+Invoke-Command -Session $remoteSession -Scriptblock {
+
+New-Item "C:\homes" -Type Directory
+
+New-SmbShare -Name "homes" -Path "C:\homes" -ChangeAccess "Users" -FullAccess "Administrators"
+
+
+} -ArgumentList $dnsdomain, $domainCredential
