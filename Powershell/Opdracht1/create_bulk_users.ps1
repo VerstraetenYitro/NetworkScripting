@@ -27,7 +27,7 @@ New-ADUser -Name $name `
 -ChangePasswordAtLogon $false
 
 
-#Make home dirs --nog aanpassen
+#Make home dirs --nog aanpassen--
 $fullPath = "\\win11-MS\homes\{0}" -f $samAccountN
  
 $User = Get-ADUser -Identity $samAccountN
