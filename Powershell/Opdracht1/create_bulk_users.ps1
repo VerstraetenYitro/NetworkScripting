@@ -11,6 +11,7 @@ $givenName=$account.GivenName
 $homedir=$account.HomeDirectory
 $scriptpath=$account.ScriptPath
 $accPass=$account.AccountPassword
+$driveLetter=$account.HomeDrive
 
 # Create users
 New-ADUser -Name $name `
@@ -19,7 +20,6 @@ New-ADUser -Name $name `
 -Path $path `
 -SamAccountName $samAccountN `
 -GivenName $givenName `
--HomeDirectory $homedir `
 -PasswordNeverExpires `
 -ScriptPath $scriptpath `
 -Enabled $true `
@@ -28,10 +28,9 @@ New-ADUser -Name $name `
 
 
 #Make home dirs --nog aanpassen
-$fullPath = "\\win11-MS\homes\{0}" -f $samAccountName
-$driveLetter = "Z:"
+$fullPath = "\\win11-MS\homes\{0}" -f $samAccountN
  
-$User = Get-ADUser -Identity $samAccountName
+$User = Get-ADUser -Identity $samAccountN
  
 if($User -ne $Null) {
     Set-ADUser $User -HomeDrive $driveLetter -HomeDirectory $fullPath -ea Stop
