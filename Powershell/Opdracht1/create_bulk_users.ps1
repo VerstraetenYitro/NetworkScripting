@@ -20,10 +20,10 @@ New-ADUser -Name $name `
 -Path $path `
 -SamAccountName $samAccountN `
 -GivenName $givenName `
--PasswordNeverExpires `
+-PasswordNeverExpires $True `
 -ScriptPath $scriptpath `
 -Enabled $true `
--AccountPassword $accPass `
+-AccountPassword (ConvertTo-SecureString $accPass -AsPlainText -Force) `
 -ChangePasswordAtLogon $false
 
 
