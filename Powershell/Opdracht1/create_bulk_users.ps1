@@ -38,10 +38,10 @@ if($User -ne $Null) {
  
     $acl = Get-Acl $homeShare
  
-    $FileSystemRights = [System.Security.AccessControl.FileSystemRights]"Modify"
+    $FileSystemRights = [System.Security.AccessControl.FileSystemRights]"Fullcontrol"
     $AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow
     $InheritanceFlags = [System.Security.AccessControl.InheritanceFlags]"ContainerInherit, ObjectInherit"
-    $PropagationFlags = [System.Security.AccessControl.PropagationFlags]"InheritOnly"
+    $PropagationFlags = [System.Security.AccessControl.PropagationFlags]"None"
  
     $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule ($User.SID, $FileSystemRights, $InheritanceFlags, $PropagationFlags, $AccessControlType)
     $acl.AddAccessRule($AccessRule)
