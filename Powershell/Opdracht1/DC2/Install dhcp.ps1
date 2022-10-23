@@ -19,9 +19,13 @@ Invoke-Command -Session $remoteSession -Scriptblock {
     {
         write-host "$WindowsFeature already installed ..."
     }
+    # authorize dhcp server
+    netsh DHCP add SecurityGroups
+
+    Add-DhcpServerInDC -DnsName Win11-DC2.intranet.mijnschool.be
 }
 
-Add-DhcpServerv4Failover -ComputerName $env:COMPUTERNAME -Name "Failover" -PartnerServer "WIN11-DC2" -ServerRole Standby -ScopeId 192.168.1.0 -Force
+Add-DhcpServerv4Failover -ComputerName $env:COMPUTERNAME -Name "Loadbalance" -PartnerServer "WIN11-DC2" -ScopeId 192.168.1.0 -LoadBalancePercent 50
 
 Invoke-Command -Session $remoteSession -Scriptblock {
    Set-DhcpServerV4OptionValue -DnsServer 192.168.1.3,192.168.1.2 -Router 192.168.1.1
