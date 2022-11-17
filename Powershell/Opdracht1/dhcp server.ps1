@@ -1,4 +1,10 @@
-﻿#create dhcp server scope
+﻿# authorize dhcp server
+netsh DHCP add SecurityGroups
+
+Add-DhcpServerInDC -DnsName Win11-DC1.intranet.mijnschool.be
+
+
+#create dhcp server scope
 Add-DhcpServerv4Scope -StartRange 192.168.1.1 -EndRange 192.168.1.254 -Name Kortrijk -SubnetMask 255.255.255.0 -State Active
 
 #exclude ip addresses
