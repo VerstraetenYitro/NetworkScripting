@@ -1,4 +1,7 @@
 #!/bin/bash
+
+#print alle certificatien die vervallen zijn of binnen de 2 weken vervallen 
+
 sudo apt install bc
 
 find / -name '*.pem' -print0 | while IFS= read -d '' -r file
