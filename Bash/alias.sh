@@ -16,6 +16,7 @@ echo '  allow-recursion { 127.0.0.1; 192.168.1.0/24; };' >> /etc/bind/named.conf
 echo '};' >> /etc/bind/named.conf.options
 
 
+echo "" > /etc/bind/named.conf.local
 echo 'zone "yitro.be" {' >> /etc/bind/named.conf.local
 echo '  type master;' >> /etc/bind/named.conf.local
 echo '  file "/etc/bind/zones/db.yitro.be";' >> /etc/bind/named.conf.local
@@ -30,6 +31,7 @@ sudo mkdir /etc/bind/zones
 
 touch /etc/bind/zones/db.yitro.be
 
+echo "" > /etc/bind/zones/db.yitro.be
 echo ';' >> /etc/bind/zones/db.yitro.be
 echo '$TTL    604800' >> /etc/bind/zones/db.yitro.be
 echo '@       IN      SOA     yitro.be. root.yitro.be. (' >> /etc/bind/zones/db.yitro.be
@@ -55,6 +57,7 @@ echo 'www.mailadmin   IN      A       192.168.1.124' >> /etc/bind/zones/db.yitro
 
 touch /etc/bind/zones/db.192.168
 
+echo "" > /etc/bind/zones/db.192.168
 echo ';' >> /etc/bind/zones/db.192.168
 echo '$TTL    604800' >> /etc/bind/zones/db.192.168
 echo '@       IN      SOA     yitro.be. root.yitro.be. (' >> /etc/bind/zones/db.192.168
@@ -69,4 +72,4 @@ echo '@               IN      NS      yitro.be.' >> /etc/bind/zones/db.192.168
 echo '@               IN      A       192.168.1.124' >> /etc/bind/zones/db.192.168
 
 
-sudo systemctl restart named
+sudo systemctl restart bind9
