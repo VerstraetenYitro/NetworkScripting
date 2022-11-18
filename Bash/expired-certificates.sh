@@ -1,1 +1,2 @@
 #!/bin/bash
+find / -name '*.pem' -print0 | while IFS= read -d '' -r file; do echo "(" $(date -d "`openssl x509 -in "$file"-text -noout | grep "Not After" | cut -c 25-`" +%s) - $(date -d "now" +%s) ")" / 86400; done
